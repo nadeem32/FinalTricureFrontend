@@ -1,0 +1,225 @@
+/* ── Google Fonts ── must be first ───────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-slate-800 font-sans antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-display tracking-tight;
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-slate-100; }
+::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+
+/* ── Prevent Flash of Invisible Content (FOIC) ────────────────────────────── */
+/* Animated elements start at opacity 0 until animation runs */
+.animate-fade-in-up,
+.animate-slide-up,
+.animate-fade-in,
+.animate-scale-in {
+  opacity: 0;
+}
+
+/* ── Animation Delays ─────────────────────────────────────────────────────── */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+
+/* ── Glassmorphism ────────────────────────────────────────────────────────── */
+.glass-panel {
+  @apply bg-white/85 backdrop-blur-xl border border-white/60 shadow-card-xl;
+}
+
+.glass-card {
+  @apply bg-white/90 backdrop-blur-md border border-slate-100 shadow-card
+         hover:shadow-card-lg hover:-translate-y-1 transition-all duration-300;
+}
+
+.glass-dark {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-card-xl;
+}
+
+/* ── Card System ──────────────────────────────────────────────────────────── */
+.card-base {
+  @apply bg-white rounded-2xl border border-slate-100 shadow-card;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-card-lg hover:-translate-y-1 hover:border-slate-200;
+}
+
+/* Gradient border on hover — background-clip technique (reliable, no z-index issues) */
+.gradient-border-card {
+  border: 1.5px solid #e2e8f0;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(135deg, #e2e8f0 0%, #e2e8f0 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: background-image 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
+}
+
+.gradient-border-card:hover {
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(135deg, #2563eb 0%, #6366f1 50%, #8b5cf6 100%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.09);
+  transform: translateY(-3px);
+}
+
+/* ── Section Labels (eyebrow text) ────────────────────────────────────────── */
+.section-tag {
+  @apply inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.12em];
+}
+
+.section-tag-blue {
+  @apply section-tag text-blue-600;
+}
+
+.section-tag-dark {
+  @apply section-tag text-blue-400;
+}
+
+/* ── Text Gradients ───────────────────────────────────────────────────────── */
+.text-gradient-primary {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500;
+}
+
+.text-gradient-vivid {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #a78bfa 100%);
+}
+
+.text-gradient-accent {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-500;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #3b82f6 0%, #818cf8 40%, #a78bfa 60%, #3b82f6 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-7 py-3.5 rounded-full
+         bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm
+         shadow-glow-sm hover:shadow-glow
+         transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center px-7 py-3.5 rounded-full
+         border-2 border-blue-600 text-blue-600 font-semibold text-sm
+         hover:bg-blue-600 hover:text-white
+         transition-all duration-200;
+}
+
+.btn-ghost-white {
+  @apply inline-flex items-center justify-center px-7 py-3.5 rounded-full
+         bg-white/10 hover:bg-white/20 backdrop-blur-sm
+         text-white font-semibold text-sm
+         border border-white/20 hover:border-white/40
+         transition-all duration-200;
+}
+
+.btn-dark {
+  @apply inline-flex items-center justify-center px-7 py-3.5 rounded-full
+         bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm
+         transition-all duration-200 transform hover:-translate-y-0.5;
+}
+
+/* ── Backgrounds & Patterns ───────────────────────────────────────────────── */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-dot-grid {
+  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.3) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-dot-grid-dark {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-hero-gradient {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -15%, rgba(37, 99, 235, 0.40), transparent),
+    radial-gradient(ellipse 55% 55% at 90% 75%,  rgba(99, 102, 241, 0.22), transparent),
+    radial-gradient(ellipse 45% 45% at 5%  80%,  rgba(139, 92, 246, 0.18), transparent),
+    #0f172a;
+}
+
+/* ── Form Inputs ──────────────────────────────────────────────────────────── */
+.form-input {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-200 bg-white
+         text-slate-900 placeholder-slate-400 text-sm font-medium
+         focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400
+         transition-all duration-200 shadow-sm;
+}
+
+.form-label {
+  @apply block text-sm font-semibold text-slate-700 mb-1.5;
+}
+
+/* ── Feature Icon Box ─────────────────────────────────────────────────────── */
+.icon-box {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
+         transition-all duration-300;
+}
+
+.icon-box-blue   { @apply icon-box bg-blue-50   text-blue-600   group-hover:bg-blue-600   group-hover:text-white; }
+.icon-box-indigo { @apply icon-box bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white; }
+.icon-box-violet { @apply icon-box bg-violet-50 text-violet-600 group-hover:bg-violet-600 group-hover:text-white; }
+.icon-box-rose   { @apply icon-box bg-rose-50   text-rose-600   group-hover:bg-rose-600   group-hover:text-white; }
+.icon-box-amber  { @apply icon-box bg-amber-50  text-amber-600  group-hover:bg-amber-600  group-hover:text-white; }
+.icon-box-teal   { @apply icon-box bg-teal-50   text-teal-600   group-hover:bg-teal-600   group-hover:text-white; }
+.icon-box-green  { @apply icon-box bg-green-50  text-green-600  group-hover:bg-green-600  group-hover:text-white; }
+.icon-box-sky    { @apply icon-box bg-sky-50    text-sky-600    group-hover:bg-sky-600    group-hover:text-white; }
+
+/* ── Section Divider ──────────────────────────────────────────────────────── */
+.section-divider {
+  @apply w-10 h-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 mb-5;
+}
+
+/* ── Hero Glow Ring (badge) ───────────────────────────────────────────────── */
+.badge-glow {
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25), 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+/* ── Page Header (inner pages) ────────────────────────────────────────────── */
+.page-header {
+  @apply bg-slate-950 py-28 relative overflow-hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 120%, rgba(37,99,235,0.25), transparent);
+  pointer-events: none;
+}
