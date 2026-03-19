@@ -1,0 +1,56 @@
+# Runs after this repo's frontend image build succeeds on main.
+# Server pulls :latest for the frontend service only (split-repo safe).
+name: Deploy Frontend to Hetzner
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Frontend (GHCR)"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
+
+    steps:
+      - name: Deploy to Hetzner via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USERNAME }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            REPO_DIR=/opt/tricure
+            OWNER='${{ github.repository_owner }}'
+
+            cd "$REPO_DIR"
+
+            # Optional: sync compose / infra from git (if this directory is a clone)
+            if git rev-parse --git-dir >/dev/null 2>&1; then
+              echo "=== Pulling infra repo ==="
+              git fetch origin main
+              git reset --hard origin/main
+            fi
+
+            echo "=== Logging in to GHCR ==="
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io \
+              -u "$OWNER" --password-stdin
+
+            echo "=== Pulling frontend image (:latest) ==="
+            IMAGE_TAG=latest GITHUB_REPOSITORY_OWNER="$OWNER" \
+              docker compose pull --ignore-pull-failures frontend
+
+            echo "=== Restarting frontend ==="
+            IMAGE_TAG=latest GITHUB_REPOSITORY_OWNER="$OWNER" \
+              docker compose up -d --no-deps --remove-orphans frontend
+
+            echo "=== Pruning old images (>24 h) ==="
+            docker image prune -f --filter "until=24h" || true
+
+            echo "=== Deploy complete ==="
+            docker compose ps
