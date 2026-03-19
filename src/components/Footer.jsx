@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { getCompanySettings } from '../services/api';
+import React from 'react';
+// import { useState, useEffect } from 'react';
+// import { getCompanySettings } from '../services/api';
+
+const COMPANY_EMAIL    = 'info@tricoreinnovations.com';
+const COMPANY_TAGLINE  = "Engineering tomorrow's digital solutions for enterprises across every industry.";
 
 const Footer = () => {
-    const [settings, setSettings] = useState(null);
-
-    useEffect(() => {
-        getCompanySettings().then(res => setSettings(res.data)).catch(console.error);
-    }, []);
-
-    if (!settings) return null;
+    // -- DB-driven settings (commented out until CMS is ready) --
+    // const [settings, setSettings] = useState(null);
+    // useEffect(() => {
+    //     getCompanySettings().then(res => setSettings(res.data)).catch(console.error);
+    // }, []);
+    // if (!settings) return null;
 
     return (
         <footer className="bg-slate-950 border-t border-white/[0.06] text-white pt-16 pb-8">
@@ -25,7 +28,7 @@ const Footer = () => {
                             </span>
                         </div>
                         <p className="text-slate-400 text-sm leading-relaxed">
-                            {settings.missionStatement}
+                            {COMPANY_TAGLINE}
                         </p>
                     </div>
 
@@ -33,7 +36,7 @@ const Footer = () => {
                     <div>
                         <h4 className="text-sm font-bold text-white uppercase tracking-[0.08em] mb-5">Contact Us</h4>
                         <div className="space-y-2 text-slate-400 text-sm">
-                            <p>Email: {settings.email}</p>
+                            <p>Email: {COMPANY_EMAIL}</p>
                             {/* <p>Phone: {settings.phone}</p>
                             <p>Address: {settings.address}</p> */}
                         </div>
