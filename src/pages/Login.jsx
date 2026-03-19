@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    usePageTitle('Login');
 
     const handleLogin = (e) => {
         e.preventDefault();

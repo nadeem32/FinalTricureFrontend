@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTeam, getCompanySettings } from '../services/api';
 import { LightBulbIcon, UsersIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
+import usePageTitle from '../hooks/usePageTitle';
 
 const values = [
     { Icon: LightBulbIcon,  title: 'Innovation',   desc: 'We challenge conventions and explore new ideas to deliver solutions that are ahead of the curve.' },
@@ -11,6 +12,7 @@ const values = [
 const About = () => {
     const [team, setTeam]         = useState([]);
     const [settings, setSettings] = useState(null);
+    usePageTitle('About Us');
 
     useEffect(() => {
         Promise.all([getTeam(), getCompanySettings()]).then(([teamRes, settingsRes]) => {

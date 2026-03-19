@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getServices } from '../services/api';
+import usePageTitle from '../hooks/usePageTitle';
 import {
     CodeBracketIcon,
     BeakerIcon,
@@ -42,6 +43,7 @@ const placeholderServices = [
 ];
 
 const Services = () => {
+    usePageTitle('Our Services');
     const [services, setServices] = useState([]);
     const [loading, setLoading]   = useState(true);
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createInquiry, getCompanySettings } from '../services/api';
+import usePageTitle from '../hooks/usePageTitle';
 import {
     EnvelopeIcon,
     PhoneIcon,
@@ -14,6 +15,7 @@ const Contact = () => {
     const [settings, setSettings]   = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading]     = useState(false);
+    usePageTitle('Contact Us');
 
     useEffect(() => {
         getCompanySettings().then(res => setSettings(res.data)).catch(console.error);

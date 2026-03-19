@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getProducts, getCompanySettings, getTeam, getProductPages } from '../services/api';
+import Reveal from '../components/Reveal';
+import { useReveal } from '../hooks/useReveal';
+import usePageTitle from '../hooks/usePageTitle';
 import {
     ArrowRightIcon,
     CheckCircleIcon,
@@ -75,6 +78,46 @@ const whyItems = [
     { Icon: CheckCircleIcon, title: 'Committed Partnership',     desc: 'We don\'t just ship software — we stay invested in your success long after go-live.' },
 ];
 
+/* ── Animated stat counter (triggers once on scroll) ───────────────────────── */
+const CountStat = ({ num, suffix = '', display, decimals = 0, grad, isActive }) => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        if (!isActive || num === null) return;
+        const steps = 60;
+        let c = 0;
+        const t = setInterval(() => {
+            c = Math.min(c + num / steps, num);
+            setCount(c);
+            if (c >= num) clearInterval(t);
+        }, 1800 / steps);
+        return () => clearInterval(t);
+    }, [isActive, num]);
+    const text = num === null
+        ? display
+        : `${decimals === 0 ? Math.floor(count) : count.toFixed(decimals)}${suffix}`;
+    return (
+        <p className={`text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r ${grad}`}>
+            {text}
+        </p>
+    );
+};
+
+/* ── Tech stack badge data for ticker ──────────────────────────────────────── */
+const techBadges = [
+    { name: 'React',        dot: 'bg-sky-400' },
+    { name: 'Spring Boot',  dot: 'bg-green-500' },
+    { name: 'PostgreSQL',   dot: 'bg-blue-500' },
+    { name: 'Docker',       dot: 'bg-blue-400' },
+    { name: 'TypeScript',   dot: 'bg-blue-600' },
+    { name: 'Java 17',      dot: 'bg-orange-500' },
+    { name: 'Kubernetes',   dot: 'bg-indigo-500' },
+    { name: 'Node.js',      dot: 'bg-green-400' },
+    { name: 'Python',       dot: 'bg-yellow-500' },
+    { name: 'AWS',          dot: 'bg-orange-400' },
+    { name: 'Tailwind CSS', dot: 'bg-cyan-400' },
+    { name: 'Linux',        dot: 'bg-slate-500' },
+];
+
 /* ── Component ──────────────────────────────────────────────────────────────── */
 const Home = () => {
     const [settings, setSettings]             = useState(null);
@@ -110,6 +153,8 @@ const Home = () => {
     const nextSlide = () => setCurrentSlide(p => p === demoPages.length - 1 ? 0 : p + 1);
     const prevSlide = () => setCurrentSlide(p => p === 0 ? demoPages.length - 1 : p - 1);
 
+    const [statsRef, statsVisible] = useReveal(0.3);
+    usePageTitle(); // Homepage: "Tricore Innovations | Engineering Tomorrow's Digital Solutions"
     const activeProducts  = products.filter(p => p.status === 'Active');
     const productChartData = [
         { name: 'Active',         value: products.filter(p => p.status === 'Active').length },
@@ -172,19 +217,17 @@ const Home = () => {
             </section>
 
             {/* ── STATS STRIP ──────────────────────────────────────────────── */}
-            <section className="bg-slate-950 border-t border-white/5 py-14">
+            <section ref={statsRef} className="bg-slate-950 border-t border-white/[0.07] py-14">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-2 md:grid-cols-4">
                         {[
-                            { value: '7+',    label: 'Industries Served',        grad: 'from-blue-400 to-cyan-400' },
-                            { value: '50+',   label: 'Years Combined Expertise', grad: 'from-indigo-400 to-violet-400' },
-                            { value: '24/7',  label: 'Dedicated Support',        grad: 'from-violet-400 to-purple-400' },
-                            { value: '99.9%', label: 'Uptime Commitment',        grad: 'from-blue-400 to-indigo-400' },
+                            { num: 7,    suffix: '+',  decimals: 0, grad: 'from-blue-400 to-cyan-400',     label: 'Industries Served' },
+                            { num: 50,   suffix: '+',  decimals: 0, grad: 'from-indigo-400 to-violet-400', label: 'Years Combined Expertise' },
+                            { num: null, display: '24/7',           grad: 'from-violet-400 to-purple-400', label: 'Dedicated Support' },
+                            { num: 99.9, suffix: '%',  decimals: 1, grad: 'from-blue-400 to-indigo-400',   label: 'Uptime Commitment' },
                         ].map((s, i) => (
-                            <div key={s.label} className={`text-center py-6 px-4 ${i > 0 ? 'border-l border-white/6' : ''}`}>
-                                <p className={`text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r ${s.grad}`}>
-                                    {s.value}
-                                </p>
+                            <div key={s.label} className={`text-center py-6 px-4 ${i > 0 ? 'border-l border-white/[0.08]' : ''}`}>
+                                <CountStat {...s} isActive={statsVisible} />
                                 <p className="text-slate-400 text-[11px] uppercase tracking-[0.15em]">{s.label}</p>
                             </div>
                         ))}
@@ -192,10 +235,30 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* ── TECH STACK TICKER ────────────────────────────────────────── */}
+            <div className="py-8 bg-white border-b border-slate-100">
+                <p className="text-center text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 mb-5">
+                    Built with industry-leading technologies
+                </p>
+                <div className=\"relative overflow-hidden marquee-wrap\">
+                    <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+                    <div className="flex animate-marquee whitespace-nowrap">
+                        {[...techBadges, ...techBadges].map((badge, i) => (
+                            <div key={i} className="inline-flex items-center gap-2 mx-4 px-4 py-2 rounded-lg bg-slate-50 border border-slate-100 text-slate-600 text-sm font-semibold flex-shrink-0">
+                                <span className={`w-2 h-2 rounded-full ${badge.dot} flex-shrink-0`} />
+                                {badge.name}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
             {/* ── OUR EXPERTISE ────────────────────────────────────────────── */}
             <section className="py-24 bg-white relative">
                 <div className="absolute inset-0 bg-dot-grid" />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <Reveal>
                     <div className="text-center mb-16">
                         <p className="section-tag-blue mb-3">What We Do</p>
                         <div className="section-divider mx-auto" />
@@ -204,10 +267,12 @@ const Home = () => {
                             Comprehensive technology solutions built for modern enterprises across every sector.
                         </p>
                     </div>
+                    </Reveal>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                        {expertiseCards.map((item) => (
-                            <div key={item.title} className="gradient-border-card bg-white rounded-2xl p-8 group">
+                        {expertiseCards.map((item, idx) => (
+                            <Reveal key={item.title} delay={idx * 120}>
+                            <div className="gradient-border-card bg-white rounded-2xl p-8 group h-full">
                                 <div className={`${item.iconClass} mb-6 group-hover:scale-110 transition-transform duration-300`}>
                                     <item.Icon className="w-6 h-6" />
                                 </div>
@@ -217,6 +282,7 @@ const Home = () => {
                                     Learn more <ArrowRightIcon className="w-4 h-4 ml-1" />
                                 </Link>
                             </div>
+                            </Reveal>
                         ))}
                     </div>
 
@@ -230,11 +296,14 @@ const Home = () => {
 
             {/* ── OUR APPROACH ─────────────────────────────────────────────── */}
             <section className="py-24 bg-slate-950 relative overflow-hidden">
+                {/* Layered background — gradient base + asymmetric ambient glows */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/30 to-slate-950" />
                 <div className="absolute inset-0 bg-dot-grid-dark" />
-                {/* Subtle glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute -top-24 -left-24 w-[560px] h-[400px] bg-blue-600/[0.14] rounded-full blur-[110px] pointer-events-none" />
+                <div className="absolute -bottom-24 -right-24 w-[480px] h-[360px] bg-indigo-600/[0.12] rounded-full blur-[100px] pointer-events-none" />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <Reveal>
                     <div className="text-center mb-16">
                         <p className="section-tag-dark mb-3">How We Work</p>
                         <div className="section-divider mx-auto" />
@@ -243,11 +312,12 @@ const Home = () => {
                             A structured, collaborative process that consistently delivers high-quality outcomes — on time and within scope.
                         </p>
                     </div>
+                    </Reveal>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         {processSteps.map((step, idx) => (
-                            <div key={step.num} className="relative group">
-                                <div className="glass-dark rounded-2xl p-6 text-center h-full group-hover:border-blue-500/40 group-hover:bg-white/8 transition-all duration-300">
+                            <Reveal key={step.num} delay={idx * 80} className="relative group">
+                                <div className="glass-dark rounded-2xl p-6 text-center h-full group-hover:border-blue-500/50 group-hover:bg-white/[0.10] transition-all duration-300">
                                     {/* Icon */}
                                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center mx-auto mb-4 shadow-glow-sm group-hover:scale-110 group-hover:shadow-glow transition-all duration-300">
                                         <step.Icon className="w-7 h-7 text-white" />
@@ -258,11 +328,11 @@ const Home = () => {
                                 </div>
                                 {/* Connector arrow */}
                                 {idx < processSteps.length - 1 && (
-                                    <div className="hidden lg:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 items-center justify-center w-6 h-6 rounded-full bg-slate-800 border border-white/10">
+                                    <div className="hidden lg:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 items-center justify-center w-6 h-6 rounded-full bg-blue-950 border border-blue-700/60">
                                         <ArrowRightIcon className="w-3 h-3 text-blue-400" />
                                     </div>
                                 )}
-                            </div>
+                            </Reveal>
                         ))}
                     </div>
                 </div>
@@ -272,6 +342,7 @@ const Home = () => {
             <section className="py-24 bg-slate-50 relative">
                 <div className="absolute inset-0 bg-grid-pattern opacity-60" />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <Reveal>
                     <div className="text-center mb-16">
                         <p className="section-tag-blue mb-3">Who We Serve</p>
                         <div className="section-divider mx-auto" />
@@ -280,12 +351,13 @@ const Home = () => {
                             Deep domain knowledge across diverse sectors — we understand the unique challenges of each industry.
                         </p>
                     </div>
+                    </Reveal>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        {industries.map((industry) => (
+                        {industries.map((industry, idx) => (
+                            <Reveal key={industry.name} delay={idx * 70}>
                             <div
-                                key={industry.name}
-                                className="group bg-white border border-slate-100 hover:border-slate-200 rounded-2xl p-6 shadow-card hover:shadow-card-lg hover:-translate-y-1 transition-all duration-300"
+                                className="group bg-white border border-slate-100 hover:border-slate-200 rounded-2xl p-6 shadow-card hover:shadow-card-lg hover:-translate-y-1 transition-all duration-300 h-full"
                             >
                                 <div className={`${industry.iconClass} mb-4`}>
                                     <industry.Icon className="w-6 h-6" />
@@ -293,6 +365,7 @@ const Home = () => {
                                 <h3 className="font-bold text-slate-900 mb-1.5 text-sm">{industry.name}</h3>
                                 <p className="text-slate-600 text-sm leading-relaxed">{industry.desc}</p>
                             </div>
+                            </Reveal>
                         ))}
                         {/* CTA tile */}
                         <div className="group bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 rounded-2xl p-6 flex flex-col justify-between shadow-glow-sm hover:shadow-glow hover:-translate-y-1 transition-all duration-300">
@@ -314,24 +387,28 @@ const Home = () => {
             {/* ── OUR SOLUTIONS (Products) ─────────────────────────────────── */}
             {activeProducts.length > 0 && (
                 <section className="py-24 bg-slate-950 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-indigo-950/20 to-slate-950" />
                     <div className="absolute inset-0 bg-dot-grid-dark" />
-                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute -top-16 left-1/4 w-[480px] h-[420px] bg-blue-600/[0.16] rounded-full blur-[110px] pointer-events-none" />
+                    <div className="absolute -bottom-16 right-16 w-[380px] h-[320px] bg-indigo-600/[0.12] rounded-full blur-[100px] pointer-events-none" />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <Reveal>
                         <div className="text-center mb-16">
-                            <p className="section-tag-dark mb-3">What We've Built</p>
+                            <p className="section-tag-dark mb-3">What We&#39;ve Built</p>
                             <div className="section-divider mx-auto" />
                             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Solutions</h2>
                             <p className="text-slate-300 max-w-xl mx-auto">
                                 Purpose-built software designed to streamline operations and accelerate growth. Click to view a demo.
                             </p>
                         </div>
+                        </Reveal>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {activeProducts.slice(0, 3).map((product) => (
                                 <div
                                     key={product.id}
                                     onClick={() => handleProductClick(product)}
-                                    className="group rounded-2xl overflow-hidden border border-white/8 bg-white/4 backdrop-blur-sm hover:border-blue-500/40 hover:bg-white/8 hover:-translate-y-1 shadow-card hover:shadow-card-xl transition-all duration-300 cursor-pointer"
+                                    className="group rounded-2xl overflow-hidden border border-white/[0.10] bg-white/[0.05] backdrop-blur-sm hover:border-blue-500/50 hover:bg-white/[0.09] hover:-translate-y-1 shadow-card hover:shadow-card-xl transition-all duration-300 cursor-pointer"
                                 >
                                     <div className="aspect-video bg-slate-800/80 relative overflow-hidden">
                                         {product.imageUrl
@@ -597,8 +674,9 @@ const Home = () => {
                                 Why Choose <span className="text-gradient-primary">Tricore Innovations?</span>
                             </h2>
                             <div className="space-y-6">
-                                {whyItems.map((item) => (
-                                    <div key={item.title} className="flex items-start gap-4 group">
+                                {whyItems.map((item, idx) => (
+                                    <Reveal key={item.title} delay={idx * 90}>
+                                    <div className="flex items-start gap-4 group">
                                         <div className="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-600 flex items-center justify-center flex-shrink-0 transition-colors duration-300 mt-0.5">
                                             <item.Icon className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors duration-300" />
                                         </div>
@@ -607,6 +685,7 @@ const Home = () => {
                                             <p className="text-slate-600 text-sm mt-1 leading-relaxed">{item.desc}</p>
                                         </div>
                                     </div>
+                                    </Reveal>
                                 ))}
                             </div>
                             <div className="mt-10">
@@ -630,6 +709,7 @@ const Home = () => {
                 <div className="absolute inset-0 bg-dot-grid-dark" />
 
                 <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <Reveal>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/15 border border-blue-500/25 text-blue-300 text-xs font-semibold uppercase tracking-widest mb-8">
                         <SparklesIcon className="w-3.5 h-3.5" /> Let's Work Together
                     </div>
@@ -648,6 +728,7 @@ const Home = () => {
                             View Our Services
                         </Link>
                     </div>
+                    </Reveal>
                 </div>
             </section>
 
