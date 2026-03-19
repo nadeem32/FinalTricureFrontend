@@ -240,7 +240,7 @@ const Home = () => {
                 <p className="text-center text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 mb-5">
                     Built with industry-leading technologies
                 </p>
-                <div className=\"relative overflow-hidden marquee-wrap\">
+                <div className="relative overflow-hidden marquee-wrap">
                     <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
                     <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
                     <div className="flex animate-marquee whitespace-nowrap">
