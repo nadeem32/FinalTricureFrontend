@@ -51,7 +51,7 @@ const About = () => {
                         </div>
                         {settings?.missionStatement && (
                             <blockquote className="mt-6 pl-5 border-l-4 border-blue-500 bg-blue-50 rounded-r-xl py-4 pr-4">
-                                <p className="text-blue-900 font-medium italic text-sm">"{settings.missionStatement}"</p>
+                                <p className="text-blue-900 font-medium italic text-sm">Engineering tomorrow's digital solutions for enterprises across every industry</p>
                                 <p className="text-blue-600 text-xs font-bold mt-2 uppercase tracking-widest">Our Mission</p>
                             </blockquote>
                         )}
