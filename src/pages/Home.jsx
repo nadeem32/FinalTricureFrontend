@@ -400,8 +400,11 @@ const Home = () => {
                 </div>
             )}  
 
-            {/* ── LEADERSHIP TEAM ──────────────────────────────────────────── */}
-            {team.length > 0 && (
+            {/* ── LEADERSHIP TEAM (temporarily hidden) ─────────────────────────
+                Cards (CEO/CTO etc.) come from CMS via getTeam(). When you have real
+                profiles, remove `false &&` below so only `team.length > 0 &&` remains.
+            */}
+            {false && team.length > 0 && (
                 <section className="py-24 bg-white relative overflow-hidden">
                     <div className="absolute inset-0 bg-dot-grid" />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -412,7 +415,6 @@ const Home = () => {
                             <p className="text-slate-500 max-w-xl mx-auto">Guided by experienced professionals with deep expertise across technology and business.</p>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> */}
                             {team.map((member, idx) => {
                                 const gradients = [
                                     'from-blue-500 to-indigo-600',
@@ -445,23 +447,6 @@ const Home = () => {
                                 );
                             })}
                         </div>
-                       
-                            {/* {team.map((member) => (
-                                <div key={member.id} className="group">
-                                    <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 shadow-card-md group-hover:shadow-card-xl transition-all duration-300">
-                                        {member.imageUrl
-                                            ? <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                            : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 text-4xl font-bold">{member.name[0]}</div>
-                                        }
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-75" />
-                                        <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                            <h3 className="text-lg font-bold text-white leading-tight">{member.name}</h3>
-                                            <p className="text-blue-400 text-sm font-medium mt-0.5">{member.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))} */}
-                        {/* </div> */}
                         <div className="text-center mt-10">
                             <Link to="/about" className="inline-flex items-center text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
                                 Meet the full team <ArrowRightIcon className="w-4 h-4 ml-1" />
