@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+// import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getServices } from '../services/api';
+// import { getServices } from '../services/api';
 import usePageTitle from '../hooks/usePageTitle';
 import {
     CodeBracketIcon,
     BeakerIcon,
-    CloudIcon,
     CpuChipIcon,
     GlobeAltIcon,
     ShieldCheckIcon,
@@ -17,7 +17,6 @@ import {
 const iconMap = {
     CodeBracketIcon: CodeBracketIcon,
     BeakerIcon:      BeakerIcon,
-    CloudIcon:       CloudIcon,
     CpuChipIcon:     CpuChipIcon,
     GlobeAltIcon:    GlobeAltIcon,
     ShieldCheckIcon: ShieldCheckIcon,
@@ -33,27 +32,26 @@ const iconBoxClasses = [
     'icon-box-rose',
 ];
 
-const placeholderServices = [
-    { id: 'p1', title: 'Custom Software Development', description: 'Tailored applications engineered to your exact requirements, built for performance and long-term scalability.',                                                 icon: 'CodeBracketIcon', content: 'React, Vue, Node.js, Spring Boot, mobile apps, progressive web apps.' },
-    { id: 'p2', title: 'Cloud & Infrastructure',      description: 'Cloud-native architectures, seamless migrations, and managed infrastructure that scales with your growth.',                                                        icon: 'GlobeAltIcon',    content: 'AWS, GCP, Azure, Docker, Kubernetes, CI/CD pipelines.' },
-    { id: 'p3', title: 'Data & AI Solutions',          description: 'Unlock insights from your data with analytics platforms, machine learning models, and intelligent automation.',                                                    icon: 'CpuChipIcon',     content: 'Data pipelines, ML models, BI dashboards, predictive analytics.' },
-    { id: 'p4', title: 'API & Integration Services',   description: 'Connect your systems and third-party tools through robust, well-documented API design and enterprise integration patterns.',                                    icon: 'BoltIcon',        content: 'REST, GraphQL, microservices, message queues, webhooks.' },
-    { id: 'p5', title: 'Security & Compliance',        description: 'Security-first engineering with threat modelling, penetration testing, code audits, and regulatory compliance guidance built in.',                             icon: 'ShieldCheckIcon', content: 'ISO 27001, SOC 2, GDPR, security architecture reviews.' },
-    { id: 'p6', title: 'Digital Transformation',       description: 'End-to-end modernisation of legacy systems, processes, and workflows to unlock efficiency and competitive advantage.',                                        icon: 'BeakerIcon',      content: 'Legacy migration, process automation, change management.' },
+const staticServices = [
+    { id: 'p1', title: 'Custom Software Development', description: 'Tailored applications engineered to your exact requirements, built for performance and long-term scalability.',                icon: 'CodeBracketIcon', content: 'React, Vue, Node.js, Spring Boot, mobile apps, progressive web apps.' },
+    { id: 'p2', title: 'Cloud & Infrastructure',      description: 'Cloud-native architectures, seamless migrations, and managed infrastructure that scales with your growth.',                   icon: 'GlobeAltIcon',    content: 'AWS, GCP, Azure, Docker, Kubernetes, CI/CD pipelines.' },
+    { id: 'p3', title: 'Data & AI Solutions',          description: 'Unlock insights from your data with analytics platforms, machine learning models, and intelligent automation.',               icon: 'CpuChipIcon',     content: 'Data pipelines, ML models, BI dashboards, predictive analytics.' },
+    { id: 'p4', title: 'API & Integration Services',   description: 'Connect your systems and third-party tools through robust, well-documented API design and enterprise integration patterns.', icon: 'BoltIcon',        content: 'REST, GraphQL, microservices, message queues, webhooks.' },
+    { id: 'p5', title: 'Security & Compliance',        description: 'Security-first engineering with threat modelling, penetration testing, code audits, and regulatory compliance guidance.',    icon: 'ShieldCheckIcon', content: 'ISO 27001, SOC 2, GDPR, security architecture reviews.' },
+    { id: 'p6', title: 'Digital Transformation',       description: 'End-to-end modernisation of legacy systems, processes, and workflows to unlock efficiency and competitive advantage.',       icon: 'BeakerIcon',      content: 'Legacy migration, process automation, change management.' },
 ];
 
 const Services = () => {
     usePageTitle('Our Services');
-    const [services, setServices] = useState([]);
-    const [loading, setLoading]   = useState(true);
-
-    useEffect(() => {
-        getServices()
-            .then(res => { setServices(res.data); setLoading(false); })
-            .catch(() => setLoading(false));
-    }, []);
-
-    const displayServices = services.length > 0 ? services : placeholderServices;
+    // -- DB-driven services (commented out until CMS is configured) --
+    // const [services, setServices] = useState([]);
+    // const [loading, setLoading]   = useState(false);
+    // useEffect(() => {
+    //     getServices()
+    //         .then(res => { setServices(res.data); setLoading(false); })
+    //         .catch(() => setLoading(false));
+    // }, []);
+    // const displayServices = services.length > 0 ? services : staticServices;
 
     return (
         <div className="bg-white">
@@ -84,46 +82,29 @@ const Services = () => {
                     </p>
                 </div>
 
-                {loading ? (
-                    /* Skeleton loader */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {[...Array(6)].map((_, i) => (
-                            <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50 p-8 animate-pulse">
-                                <div className="w-12 h-12 rounded-xl bg-slate-200 mb-6" />
-                                <div className="h-5 w-2/3 bg-slate-200 rounded mb-3" />
-                                <div className="space-y-2">
-                                    <div className="h-3 bg-slate-200 rounded" />
-                                    <div className="h-3 bg-slate-200 rounded w-5/6" />
-                                    <div className="h-3 bg-slate-200 rounded w-4/6" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {staticServices.map((service, idx) => {
+                        const IconComponent = iconMap[service.icon] || SparklesIcon;
+                        const boxClass      = iconBoxClasses[idx % iconBoxClasses.length];
+                        return (
+                            <div
+                                key={service.id}
+                                className="gradient-border-card bg-white rounded-2xl p-8 group"
+                            >
+                                <div className={`${boxClass} mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                                    <IconComponent className="w-6 h-6" />
                                 </div>
+                                <h3 className="text-lg font-bold text-slate-900 mb-3">{service.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed mb-4">{service.description}</p>
+                                {service.content && (
+                                    <p className="text-xs text-slate-400 border-t border-slate-100 pt-4 leading-relaxed">
+                                        {service.content}
+                                    </p>
+                                )}
                             </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {displayServices.map((service, idx) => {
-                            const IconComponent = iconMap[service.icon] || SparklesIcon;
-                            const boxClass      = iconBoxClasses[idx % iconBoxClasses.length];
-                            return (
-                                <div
-                                    key={service.id}
-                                    className="gradient-border-card bg-white rounded-2xl p-8 group"
-                                >
-                                    <div className={`${boxClass} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                        <IconComponent className="w-6 h-6" />
-                                    </div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-3">{service.title}</h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed mb-4">{service.description}</p>
-                                    {service.content && (
-                                        <p className="text-xs text-slate-400 border-t border-slate-100 pt-4 leading-relaxed">
-                                            {service.content}
-                                        </p>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
+                        );
+                    })}
+                </div>
             </div>
 
             {/* ── CTA ─────────────────────────────────────────────────────── */}

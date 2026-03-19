@@ -41,7 +41,7 @@ const Contact = () => {
         {
             Icon:  EnvelopeIcon,
             title: 'Email Us',
-            value: settings?.email || 'info@tricoreinnovations.com',
+            value:  'info@tricoreinnovations.com',
             sub:   'We respond within 24 hours.',
             iconClass: 'icon-box-blue',
         },
