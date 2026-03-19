@@ -46,7 +46,7 @@ const Navbar = () => {
                             T
                         </div>
                         <span className={`text-xl font-bold font-display ${logoColor} transition-colors`}>
-                            Tricore<span className="text-blue-500">Innovations</span>
+                            Tricore<span className="text-blue-600">Innovations</span>
                         </span>
                     </Link>
 

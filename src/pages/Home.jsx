@@ -133,7 +133,7 @@ const Home = () => {
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     {/* Animated badge */}
-                    <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/8 border border-white/15 backdrop-blur-sm text-blue-200 text-sm font-medium mb-8 animate-fade-in-up badge-glow">
+                    <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] border border-white/15 backdrop-blur-sm text-blue-200 text-sm font-medium mb-8 animate-fade-in-up badge-glow">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping-dot absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400" />
@@ -141,7 +141,7 @@ const Home = () => {
                         Driving Digital Transformation
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 animate-fade-in-up animate-delay-100 leading-[1.1]">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 animate-fade-in-up animate-delay-100 leading-[1.1]">
                         Engineering Tomorrow's{' '}
                         <span className="text-gradient-vivid">Digital Solutions</span>
                     </h1>
@@ -185,7 +185,7 @@ const Home = () => {
                                 <p className={`text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r ${s.grad}`}>
                                     {s.value}
                                 </p>
-                                <p className="text-slate-500 text-xs uppercase tracking-widest">{s.label}</p>
+                                <p className="text-slate-400 text-[11px] uppercase tracking-[0.15em]">{s.label}</p>
                             </div>
                         ))}
                     </div>
@@ -199,8 +199,8 @@ const Home = () => {
                     <div className="text-center mb-16">
                         <p className="section-tag-blue mb-3">What We Do</p>
                         <div className="section-divider mx-auto" />
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Our Expertise</h2>
-                        <p className="text-slate-500 max-w-xl mx-auto leading-relaxed">
+                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Our Expertise</h2>
+                        <p className="text-slate-600 max-w-xl mx-auto leading-relaxed">
                             Comprehensive technology solutions built for modern enterprises across every sector.
                         </p>
                     </div>
@@ -212,7 +212,7 @@ const Home = () => {
                                     <item.Icon className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                                <p className="text-slate-500 mb-6 leading-relaxed text-sm">{item.desc}</p>
+                                <p className="text-slate-600 mb-6 leading-relaxed text-sm">{item.desc}</p>
                                 <Link to="/services" className="inline-flex items-center text-blue-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
                                     Learn more <ArrowRightIcon className="w-4 h-4 ml-1" />
                                 </Link>
@@ -238,8 +238,8 @@ const Home = () => {
                     <div className="text-center mb-16">
                         <p className="section-tag-dark mb-3">How We Work</p>
                         <div className="section-divider mx-auto" />
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Approach</h2>
-                        <p className="text-slate-400 max-w-xl mx-auto leading-relaxed">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Approach</h2>
+                        <p className="text-slate-300 max-w-xl mx-auto leading-relaxed">
                             A structured, collaborative process that consistently delivers high-quality outcomes — on time and within scope.
                         </p>
                     </div>
@@ -254,7 +254,7 @@ const Home = () => {
                                     </div>
                                     <span className="text-xs font-bold text-blue-400 uppercase tracking-widest">{step.num}</span>
                                     <h3 className="text-base font-bold text-white mt-1 mb-2">{step.title}</h3>
-                                    <p className="text-slate-400 text-xs leading-relaxed">{step.desc}</p>
+                                    <p className="text-slate-300 text-sm leading-relaxed">{step.desc}</p>
                                 </div>
                                 {/* Connector arrow */}
                                 {idx < processSteps.length - 1 && (
@@ -275,8 +275,8 @@ const Home = () => {
                     <div className="text-center mb-16">
                         <p className="section-tag-blue mb-3">Who We Serve</p>
                         <div className="section-divider mx-auto" />
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Industries We Serve</h2>
-                        <p className="text-slate-500 max-w-xl mx-auto leading-relaxed">
+                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Industries We Serve</h2>
+                        <p className="text-slate-600 max-w-xl mx-auto leading-relaxed">
                             Deep domain knowledge across diverse sectors — we understand the unique challenges of each industry.
                         </p>
                     </div>
@@ -291,7 +291,7 @@ const Home = () => {
                                     <industry.Icon className="w-6 h-6" />
                                 </div>
                                 <h3 className="font-bold text-slate-900 mb-1.5 text-sm">{industry.name}</h3>
-                                <p className="text-slate-500 text-xs leading-relaxed">{industry.desc}</p>
+                                <p className="text-slate-600 text-sm leading-relaxed">{industry.desc}</p>
                             </div>
                         ))}
                         {/* CTA tile */}
@@ -301,7 +301,7 @@ const Home = () => {
                                     <SparklesIcon className="w-5 h-5 text-white" />
                                 </div>
                                 <h3 className="font-bold text-white text-sm mb-2">Don't see yours?</h3>
-                                <p className="text-blue-100 text-xs leading-relaxed">We work across all verticals. Let's talk.</p>
+                                <p className="text-blue-100 text-sm leading-relaxed">We work across all verticals. Let's talk.</p>
                             </div>
                             <Link to="/contact" className="mt-5 inline-flex items-center text-white font-semibold text-sm group-hover:translate-x-1 transition-transform">
                                 Get in Touch <ArrowRightIcon className="w-4 h-4 ml-1" />
@@ -320,8 +320,8 @@ const Home = () => {
                         <div className="text-center mb-16">
                             <p className="section-tag-dark mb-3">What We've Built</p>
                             <div className="section-divider mx-auto" />
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Solutions</h2>
-                            <p className="text-slate-400 max-w-xl mx-auto">
+                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Solutions</h2>
+                            <p className="text-slate-300 max-w-xl mx-auto">
                                 Purpose-built software designed to streamline operations and accelerate growth. Click to view a demo.
                             </p>
                         </div>
@@ -346,7 +346,7 @@ const Home = () => {
                                     </div>
                                     <div className="p-6">
                                         <h3 className="text-lg font-bold text-white mb-2">{product.name}</h3>
-                                        <p className="text-slate-400 text-sm line-clamp-2 mb-4">{product.description}</p>
+                                        <p className="text-slate-300 text-sm line-clamp-2 mb-4">{product.description}</p>
                                         <div className="flex items-center justify-between">
                                             <span className="px-3 py-1 rounded-full bg-blue-900/60 text-blue-400 text-xs font-semibold border border-blue-800/60">
                                                 {product.category}
@@ -457,26 +457,23 @@ const Home = () => {
             )}
 
             {/* ── VISION & ROADMAP ─────────────────────────────────────────── */}
-            <section className="py-24 bg-slate-950 relative overflow-hidden">
-                <div className="absolute inset-0">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/40 to-slate-950" />
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/15 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/15 rounded-full blur-[100px]" />
-                </div>
-                <div className="absolute inset-0 bg-dot-grid-dark" />
+            <section className="py-24 bg-white relative overflow-hidden">
+                <div className="absolute inset-0 bg-dot-grid" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-50 rounded-full blur-[100px] pointer-events-none" />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         {/* Left */}
                         <div>
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/15 border border-blue-500/25 text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-xs font-semibold uppercase tracking-[0.08em] mb-6">
                                 <SparklesIcon className="w-3.5 h-3.5" /> Future Roadmap
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-5 leading-tight">
+                            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 leading-tight">
                                 Pioneering the Next Era of{' '}
-                                <span className="text-gradient-vivid">Enterprise Technology</span>
+                                <span className="text-gradient-primary">Enterprise Technology</span>
                             </h2>
-                            <p className="text-slate-400 leading-relaxed mb-8">
+                            <p className="text-slate-600 leading-relaxed mb-8">
                                 We're actively building AI-driven automation platforms and cloud-native frameworks that will redefine how businesses operate and compete in the digital economy.
                             </p>
                             <div className="space-y-5">
@@ -485,12 +482,12 @@ const Home = () => {
                                     { Icon: GlobeAltIcon, title: 'Universal System Integration',    desc: 'Seamless data exchange and interoperability across any platform or system.' },
                                 ].map(item => (
                                     <div key={item.title} className="flex items-start gap-4">
-                                        <div className="w-11 h-11 rounded-xl glass-dark flex items-center justify-center text-blue-400 flex-shrink-0">
+                                        <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                                             <item.Icon className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-white text-sm">{item.title}</h4>
-                                            <p className="text-slate-400 text-xs mt-1 leading-relaxed">{item.desc}</p>
+                                            <h4 className="font-bold text-slate-900 text-sm">{item.title}</h4>
+                                            <p className="text-slate-600 text-sm mt-1 leading-relaxed">{item.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -499,14 +496,14 @@ const Home = () => {
 
                         {/* Right - Roadmap card */}
                         <div className="relative">
-                            <div className="absolute -inset-3 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl opacity-15 blur-lg transform rotate-2" />
-                            <div className="relative glass-dark rounded-3xl p-8 border border-white/10">
-                                <div className="flex items-center justify-between mb-6 pb-5 border-b border-white/8">
+                            <div className="absolute -inset-3 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl opacity-10 blur-lg transform rotate-2" />
+                            <div className="relative bg-white rounded-3xl p-8 border border-slate-200 shadow-card-xl">
+                                <div className="flex items-center justify-between mb-6 pb-5 border-b border-slate-100">
                                     <div>
                                         <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">Current Milestone</p>
-                                        <span className="font-bold text-white text-lg">Q3 2026</span>
+                                        <span className="font-bold text-slate-900 text-lg">Q3 2026</span>
                                     </div>
-                                    <span className="px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-bold border border-emerald-500/25">
+                                    <span className="px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-200">
                                         In Progress
                                     </span>
                                 </div>
@@ -517,11 +514,11 @@ const Home = () => {
                                     ].map((item, i) => (
                                         <div key={item.title} className="flex gap-4">
                                             <div className="w-7 h-7 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <span className="text-blue-400 text-xs font-bold">{i + 1}</span>
+                                                <span className="text-blue-600 text-xs font-bold">{i + 1}</span>
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-white text-sm mb-1">{item.title}</h4>
-                                                <p className="text-slate-400 text-xs leading-relaxed">{item.desc}</p>
+                                                <h4 className="font-bold text-slate-900 text-sm mb-1">{item.title}</h4>
+                                                <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -546,7 +543,7 @@ const Home = () => {
                             <div className="absolute -inset-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl opacity-8 blur-2xl" />
                             <div className="relative glass-panel p-8 rounded-3xl">
                                 <h3 className="text-lg font-bold text-slate-900 mb-1">Our Capabilities at a Glance</h3>
-                                <p className="text-slate-500 text-sm mb-6">Core engineering disciplines we excel at</p>
+                                <p className="text-slate-600 text-sm mb-6">Core engineering disciplines we excel at</p>
 
                                 {productChartData.length > 0 ? (
                                     <div className="h-48 mb-4">
@@ -596,7 +593,7 @@ const Home = () => {
                         <div className="order-1 lg:order-2">
                             <p className="section-tag-blue mb-3">Why Tricore</p>
                             <div className="section-divider" />
-                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8">
+                            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8">
                                 Why Choose <span className="text-gradient-primary">Tricore Innovations?</span>
                             </h2>
                             <div className="space-y-6">
@@ -607,7 +604,7 @@ const Home = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-slate-900">{item.title}</h4>
-                                            <p className="text-slate-500 text-sm mt-1 leading-relaxed">{item.desc}</p>
+                                            <p className="text-slate-600 text-sm mt-1 leading-relaxed">{item.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -640,7 +637,7 @@ const Home = () => {
                         Ready to Build Something{' '}
                         <span className="text-gradient-vivid">Exceptional?</span>
                     </h2>
-                    <p className="text-slate-400 text-lg mb-10 leading-relaxed">
+                    <p className="text-slate-300 text-lg mb-10 leading-relaxed">
                         Let's discuss your challenge and explore how Tricore Innovations can help you design and deliver the right solution.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">

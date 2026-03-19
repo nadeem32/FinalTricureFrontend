@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Section Labels (eyebrow text) ────────────────────────────────────────── */
 .section-tag {
-  @apply inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.12em];
+  @apply inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.08em];
 }
 
 .section-tag-blue {
